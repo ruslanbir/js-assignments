@@ -98,6 +98,8 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
+    //I don't know why it works slowly.
+    //Maybe... laptop?
     var tree = [root];
     var top = 0;
     while(top>=0){
@@ -133,6 +135,7 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
+    // ...same...
     var tree = [root];
     var top = 0;
     while(top < tree.length){
