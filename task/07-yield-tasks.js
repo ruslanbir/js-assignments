@@ -33,7 +33,16 @@
  *
  */
 function* get99BottlesOfBeer() {
-    throw new Error('Not implemented');
+    yield `99 bottles of beer on the wall, 99 bottles of beer.`;
+    for(var colBot=98; colBot>1; colBot--) {
+        yield `Take one down and pass it around, ${colBot} bottles of beer on the wall.`;
+        yield `${colBot} bottles of beer on the wall, ${colBot} bottles of beer.`;
+    }
+    yield `Take one down and pass it around, 1 bottle of beer on the wall.`;
+    yield `1 bottle of beer on the wall, 1 bottle of beer.`;
+    yield 'Take one down and pass it around, no more bottles of beer on the wall.';
+    yield 'No more bottles of beer on the wall, no more bottles of beer.';
+    yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';
 }
 
 
@@ -47,7 +56,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    var prev = 0, cur = 1;
+    yield 0;
+    yield 1;
+    while(1){
+        var fib = prev + cur;
+        prev = cur;
+        yield cur = fib;
+    }
 }
 
 
@@ -82,7 +98,16 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-    throw new Error('Not implemented');
+    var tree = [root];
+    var top = 0;
+    while(top>=0){
+        var cur = tree[top];
+        top--;
+        yield cur;
+        if(cur.children)
+            for(var i = cur.children.length-1; i>=0; i--)
+                tree[++top] = cur.children[i];
+    }
 }
 
 
@@ -108,7 +133,14 @@ function* depthTraversalTree(root) {
  *
  */
 function* breadthTraversalTree(root) {
-    throw new Error('Not implemented');
+    var tree = [root];
+    var top = 0;
+    while(top < tree.length){
+        var cur = tree[top++];
+        yield cur;
+        if(cur.children)
+            Array.prototype.push.apply(tree, cur.children);
+    }
 }
 
 
@@ -126,7 +158,19 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-    throw new Error('Not implemented');
+    var so1 = source1(), so2=source2();
+    var iterSo1 = so1.next();//SmIterS1
+    var iterSo2 = so2.next();//SmIterS2
+    while(!iterSo1.done && !iterSo2.done){
+        if(iterSo1.value < iterSo2.value){
+            yield iterSo1.value;
+            iterSo1 = so1.next();
+        }else{
+            yield iterSo2.value;
+            iterSo2 = so2.next();
+        }
+    }
+    yield* [...iterSo1.done ? so1 : so2];
 }
 
 
